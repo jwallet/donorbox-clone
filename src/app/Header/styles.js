@@ -35,6 +35,7 @@ const arrowButtonStyle = css`
   border-radius: 50%;
   cursor: pointer;
   position: relative;
+  background-color: ${color.backgroundDarkPrimary};
   &:not(:disabled):hover::after,
   &:not(:disabled):hover::before {
     border-color: white;

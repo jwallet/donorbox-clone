@@ -17,6 +17,9 @@
 
 ### What it does
 - It's free to use, no Donorbox processing fee, no more monthly bills to pay.
+- It sends a notification to a Slack channel (with a backend: use Paypal `notify_url` url param instead)
+
+![image](https://user-images.githubusercontent.com/23088305/93408942-c479f880-f863-11ea-9a64-4523d4a70961.png)
 
 ### What it doesn't
 - It doesn't send email... yet.

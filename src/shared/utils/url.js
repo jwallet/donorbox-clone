@@ -22,7 +22,7 @@ export const addToQueryString = (str, fields) =>
     ...fields,
   });
 
-export const navigateToUrl = (url, inNewTab = false) => {
+export const navigateToUrl = (url, { inNewTab = false }) => {
   const a = document.createElement('a');
   a.href = url;
   a.target = inNewTab ? "_blank" : "";

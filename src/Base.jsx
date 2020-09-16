@@ -1,9 +1,10 @@
 import React from 'react';
-import { get, round } from 'lodash';
+import { get } from 'lodash';
+import { slackNotifier } from 'actions/slackNotifier';
+import { proceedToPaypal } from 'actions/paypal';
 import { Form } from 'shared/components';
 import { CurrenciesEnum, getConvertedAmount } from 'shared/constants/currencies';
 import { StepsEnum } from 'shared/constants/steps';
-import { navigateToUrl } from 'shared/utils/url';
 import { AmounItemEnum } from 'shared/constants/amounts';
 import Button from 'shared/components/Button';
 import { StyledField, StyledForm } from 'shared/components/Form/styles';
@@ -29,9 +30,7 @@ const initialValues = {
     email: '',
     wantsToBeAnonymous: false,
   },
-  [StepsEnum.PAYMENT]: {
-    wantsToCoverFees: false,
-  }
+  [StepsEnum.PAYMENT]: {}
 }
 
 const validAmount = message => (value, { customAmount }) => {
@@ -51,46 +50,28 @@ const validations = {
   }
 };
 
-const getProceecingFees = amount => round((amount * 0.029) + .30, 2);
-
-const proceedToPaypal = bag => {
-  const amountItem = get(AmountForm.DonationOptionsUSD.find(d => d.value === bag.amountItem), 'label', '');
-  const params = new URLSearchParams({
-    amount: bag.amount + (bag.wantsToCoverFees ? getProceecingFees(bag.amount) : 0),
-    currency_code: bag.currency.toString().toUpperCase(),
-    email: bag.email,
-    first_name: bag.firstName,
-    last_name: bag.lastName,
-    item_number: amountItem,
-    bn: "Spytify",
-    business: "jwallet.spytify@gmail.com",
-    charset: "utf-8",
-    cmd: "_donations",
-    item_name: "Spytify Donation",
-    no_shipping: 1,
-    return: "https://jwallet.github.io/spy-spotify/donate.html",
-  });
-  navigateToUrl(`https://www.paypal.com/donate?${params.toString()}`, true);
-}
-
 const handleSubmit = ({ formsBag, setFormsBag, step, setStep }) => values => {
   switch (step) {
     case StepsEnum.AMOUNT: {
-      const { amountItem, customAmount, currency } = values;
+      const { amountItem, customAmount } = values;
       const amount = amountItem === AmounItemEnum.CUSTOM ? customAmount : AmountForm.DonationOptionsUSD.find(d => d.value === amountItem).amount;
-      setFormsBag({ ...formsBag, [step]: { ...values, amount: getConvertedAmount(amount, currency) } });
+      setFormsBag({ ...formsBag, [step]: { ...values, amount } });
+      setStep(step + 1);
       break;
     }
     case StepsEnum.PAYMENT: {
       const bag = Object.values(formsBag).reduce((acc, x) => ({...acc, ...x}), values);
-      return proceedToPaypal(bag);
+      const amountItemLabel = get(AmountForm.DonationOptionsUSD.find(d => d.value === bag.amountItem), 'label', '');
+      const updatedBag = { ...bag, amountItemLabel };
+      slackNotifier(updatedBag).finally(() => proceedToPaypal(updatedBag));
+      return;
     }
     case StepsEnum.DONOR:
     default:
       setFormsBag({ ...formsBag, [step]: values });
+      setStep(step + 1);
       break;
   }
-    setStep(step + 1);
 };
 
 const Base = () => {
@@ -120,8 +101,7 @@ const Base = () => {
                   <PaymentForm
                     amount={formsBag[StepsEnum.AMOUNT].amount}
                     currency={formsBag[StepsEnum.AMOUNT].currency}
-                    wantsToCoverFees={wantsToCoverFees}
-                    fee={getProceecingFees(formsBag[StepsEnum.AMOUNT].amount)} />
+                    wantsToCoverFees={wantsToCoverFees} />
               ) : (
                 <StyledField>
                   <Button type="submit" variant="primary" style={{ width: '100%' }}>Next</Button>
