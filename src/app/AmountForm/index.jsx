@@ -85,14 +85,15 @@ const AmountForm = ({ currency, wantsToComment }) => {
                     {...otherProps}
                     style={{ fontSize: 20, color: 'black' }}
                     value={value || ''}
-                    filter={/^\d{0,6}$/}
+                    filter={/^\d{0,6}(\.?\d{0,2})?$/g}
                     placeholder="Custom Amount"
-                    onChange={(event) => setCustomAmountValue(event, onChange)}
-                    onFocus={(event) => {
+                    onChange={(v) => onChange(v.trim())}
+                    onBlur={(e) => setCustomAmountValue(e.target.value, onChange)}
+                    onFocus={(e) => {
                       setChoice(donationOptionsUSD.length);
-                      setCustomAmountValue(event.target.value, onChange);
+                      setCustomAmountValue(e.target.value, onChange);
                       setValue(AmounItemEnum.CUSTOM);
-                      onAmounItemChange(AmounItemEnum.CUSTOM, event);
+                      onAmounItemChange(AmounItemEnum.CUSTOM, e);
                     }}
                   />
                   <Description>
