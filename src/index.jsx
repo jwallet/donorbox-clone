@@ -6,5 +6,5 @@ ReactDOM.render(
   <React.StrictMode>
     <Base />
   </React.StrictMode>,
-  document.getElementById('donate')
+  document.getElementById('donate'),
 );

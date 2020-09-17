@@ -23,7 +23,7 @@ const Textarea = forwardRef(({ className, invalid, onChange, minRows, ...textare
   <StyledTextarea className={className} invalid={invalid}>
     <textarea
       {...textareaProps}
-      onChange={event => onChange(event.target.value, event)}
+      onChange={(event) => onChange(event.target.value, event)}
       ref={ref || undefined}
     />
   </StyledTextarea>

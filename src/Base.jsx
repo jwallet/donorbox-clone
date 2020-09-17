@@ -1,9 +1,9 @@
 import React from 'react';
 import { get } from 'lodash';
-import { slackNotifier } from 'actions/slackNotifier';
-import { proceedToPaypal } from 'actions/paypal';
+import SlackNotifier from 'actions/slackNotifier';
+import Paypal from 'actions/paypal';
 import { Form } from 'shared/components';
-import { CurrenciesEnum, getConvertedAmount } from 'shared/constants/currencies';
+import { CurrenciesEnum } from 'shared/constants/currencies';
 import { StepsEnum } from 'shared/constants/steps';
 import { AmounItemEnum } from 'shared/constants/amounts';
 import Button from 'shared/components/Button';
@@ -30,10 +30,10 @@ const initialValues = {
     email: '',
     wantsToBeAnonymous: false,
   },
-  [StepsEnum.PAYMENT]: {}
-}
+  [StepsEnum.PAYMENT]: {},
+};
 
-const validAmount = message => (value, { customAmount }) => {
+const validAmount = (message) => (value, { customAmount }) => {
   if (value === AmounItemEnum.CUSTOM) return Form.is.number(message)(customAmount);
   return Form.is.required(message)(value);
 };
@@ -47,23 +47,32 @@ const validations = {
     firstName: (value, { wantsToBeAnonymous }) => !wantsToBeAnonymous && Form.is.required()(value),
     lastName: (value, { wantsToBeAnonymous }) => !wantsToBeAnonymous && Form.is.required()(value),
     email: [Form.is.required(), Form.is.email()],
-  }
+  },
 };
 
-const handleSubmit = ({ formsBag, setFormsBag, step, setStep }) => values => {
+const handleSubmit = ({ formsBag, setFormsBag, step, setStep }) => async (values) => {
   switch (step) {
     case StepsEnum.AMOUNT: {
       const { amountItem, customAmount } = values;
-      const amount = amountItem === AmounItemEnum.CUSTOM ? customAmount : AmountForm.DonationOptionsUSD.find(d => d.value === amountItem).amount;
+      const amount =
+        amountItem === AmounItemEnum.CUSTOM
+          ? customAmount
+          : AmountForm.DonationOptionsUSD.find((d) => d.value === amountItem).amount;
       setFormsBag({ ...formsBag, [step]: { ...values, amount } });
       setStep(step + 1);
       break;
     }
     case StepsEnum.PAYMENT: {
-      const bag = Object.values(formsBag).reduce((acc, x) => ({...acc, ...x}), values);
-      const amountItemLabel = get(AmountForm.DonationOptionsUSD.find(d => d.value === bag.amountItem), 'label', '');
+      const bag = Object.values(formsBag).reduce((acc, x) => ({ ...acc, ...x }), values);
+      const amountItemLabel = get(
+        AmountForm.DonationOptionsUSD.find((d) => d.value === bag.amountItem),
+        'label',
+        '',
+      );
       const updatedBag = { ...bag, amountItemLabel };
-      slackNotifier(updatedBag).finally(() => proceedToPaypal(updatedBag));
+      await SlackNotifier.paymentAttempt(updatedBag);
+      Paypal.saveDataToCookie(updatedBag);
+      await Paypal.proceedToPaypal(updatedBag);
       return;
     }
     case StepsEnum.DONOR:
@@ -86,7 +95,8 @@ const Base = () => {
         enableReinitialize
         initialValues={{ ...initialValues[step], ...formsBag[step] }}
         validations={validations[step]}
-        onSubmit={handleSubmit({ formsBag, setFormsBag, step, setStep })}>
+        onSubmit={handleSubmit({ formsBag, setFormsBag, step, setStep })}
+      >
         {({ values: { currency, wantsToComment, wantsToCoverFees } }) => (
           <Form.Element>
             <Header step={step} onStepChange={setStep} />
@@ -94,17 +104,18 @@ const Base = () => {
               {step === StepsEnum.AMOUNT && (
                 <AmountForm currency={currency} wantsToComment={wantsToComment} />
               )}
-              {step === StepsEnum.DONOR && (
-                <DonorForm />
-              )}
+              {step === StepsEnum.DONOR && <DonorForm />}
               {step === StepsEnum.PAYMENT ? (
-                  <PaymentForm
-                    amount={formsBag[StepsEnum.AMOUNT].amount}
-                    currency={formsBag[StepsEnum.AMOUNT].currency}
-                    wantsToCoverFees={wantsToCoverFees} />
+                <PaymentForm
+                  amount={formsBag[StepsEnum.AMOUNT].amount}
+                  currency={formsBag[StepsEnum.AMOUNT].currency}
+                  wantsToCoverFees={wantsToCoverFees}
+                />
               ) : (
                 <StyledField>
-                  <Button type="submit" variant="primary" style={{ width: '100%' }}>Next</Button>
+                  <Button type="submit" variant="primary" style={{ width: '100%' }}>
+                    Next
+                  </Button>
                 </StyledField>
               )}
             </StyledForm>
@@ -113,6 +124,6 @@ const Base = () => {
       </Form>
     </React.Fragment>
   );
-}
+};
 
 export default Base;

@@ -11,8 +11,8 @@ export const StyledSelect = styled.div`
     ${font.black}
   }
   ${font.size(14)}
-  ${props => props.variant === 'empty' && `display: inline-block;`}
-  ${props =>
+  ${(props) => props.variant === 'empty' && `display: inline-block;`}
+  ${(props) =>
     props.variant === 'normal' &&
     css`
       width: 100%;
@@ -24,7 +24,7 @@ export const StyledSelect = styled.div`
     `}
   &:focus {
     outline: none;
-    ${props =>
+    ${(props) =>
       props.variant === 'normal' &&
       css`
         border: 1px solid ${color.borderInputFocus};
@@ -33,7 +33,7 @@ export const StyledSelect = styled.div`
       }
     `}
   }
-  ${props =>
+  ${(props) =>
     props.invalid &&
     css`
       &,
@@ -48,7 +48,7 @@ export const ValueContainer = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  ${props =>
+  ${(props) =>
     props.variant === 'normal' &&
     css`
       min-height: 32px;
@@ -71,16 +71,18 @@ export const Chevron = styled.span`
     width: 1rem;
     height: 1rem;
     border: 2px solid ${color.textMedium};
-    ${props => props.isDropdownOpen
-    ? css`
-      border-right-width: 0;
-      border-bottom-width: 0;
-      transform: translate(-30%,20%) rotate(45deg);
-    ` : css`
-      border-top-width: 0;
-      border-left-width: 0;
-      transform: translate(-20%, -30%) rotate(45deg);;
-    `}
+    ${(props) =>
+      props.isDropdownOpen
+        ? css`
+            border-right-width: 0;
+            border-bottom-width: 0;
+            transform: translate(-30%, 20%) rotate(45deg);
+          `
+        : css`
+            border-top-width: 0;
+            border-left-width: 0;
+            transform: translate(-20%, -30%) rotate(45deg); ;
+          `}
   }
 `;
 
@@ -88,7 +90,7 @@ export const ValueMulti = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  ${props => props.variant === 'normal' && `padding-top: 5px;`}
+  ${(props) => props.variant === 'normal' && `padding-top: 5px;`}
 `;
 
 export const ValueMultiItem = styled.div`
@@ -117,7 +119,7 @@ export const Dropdown = styled.div`
   border-radius: 0 0 4px 4px;
   background: #fff;
   ${mixin.boxShadowDropdown}
-  ${props => (props.width ? `width: ${props.width}px;` : 'width: 100%;')}
+  ${(props) => (props.width ? `width: ${props.width}px;` : 'width: 100%;')}
 `;
 
 export const DropdownInput = styled.input`

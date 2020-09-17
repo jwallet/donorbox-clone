@@ -86,8 +86,8 @@ const Select = ({
 
   useOnOutsideClick($selectRef, isDropdownOpen, deactivateDropdown);
 
-  const preserveValueType = newValue => {
-    const areOptionValuesNumbers = options.some(option => typeof option.value === 'number');
+  const preserveValueType = (newValue) => {
+    const areOptionValuesNumbers = options.some((option) => typeof option.value === 'number');
 
     if (areOptionValuesNumbers) {
       if (isMulti) {
@@ -100,18 +100,18 @@ const Select = ({
     return newValue;
   };
 
-  const handleChange = newValue => {
+  const handleChange = (newValue) => {
     if (!isControlled) {
       setStateValue(preserveValueType(newValue));
     }
     onChange(preserveValueType(newValue));
   };
 
-  const removeOptionValue = optionValue => {
-    handleChange(value.filter(val => val !== optionValue));
+  const removeOptionValue = (optionValue) => {
+    handleChange(value.filter((val) => val !== optionValue));
   };
 
-  const handleFocusedSelectKeydown = event => {
+  const handleFocusedSelectKeydown = (event) => {
     if (isDropdownOpen) return;
 
     if (event.keyCode === KeyCodes.ENTER) {
@@ -122,8 +122,8 @@ const Select = ({
     }
   };
 
-  const getOption = optionValue => options.find(option => option.value === optionValue);
-  const getOptionLabel = optionValue => (getOption(optionValue) || { label: '' }).label;
+  const getOption = (optionValue) => options.find((option) => option.value === optionValue);
+  const getOptionLabel = (optionValue) => (getOption(optionValue) || { label: '' }).label;
 
   const isValueEmpty = isMulti ? !value.length : !getOption(value);
 
@@ -145,7 +145,7 @@ const Select = ({
 
         {!isValueEmpty && isMulti && (
           <ValueMulti variant={variant}>
-            {value.map(optionValue =>
+            {value.map((optionValue) =>
               propsRenderValue ? (
                 propsRenderValue({
                   value: optionValue,
@@ -158,14 +158,12 @@ const Select = ({
                 </ValueMultiItem>
               ),
             )}
-            <AddMore>
-              Add more
-            </AddMore>
+            <AddMore>Add more</AddMore>
           </ValueMulti>
         )}
 
         {(!isMulti || isValueEmpty) && variant !== 'empty' && (
-            <Chevron isDropdownOpen={isDropdownOpen} />
+          <Chevron isDropdownOpen={isDropdownOpen} />
         )}
       </ValueContainer>
 

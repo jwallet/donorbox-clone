@@ -30,17 +30,27 @@ const defaultProps = {
   children: undefined,
 };
 
-const generateField = FormComponent => {
-  const FieldComponent = ({ className, children, label, tip, error, silentError, name, ...otherProps }) => {
+const generateField = (FormComponent) => {
+  const FieldComponent = ({
+    className,
+    children,
+    label,
+    tip,
+    error,
+    silentError,
+    name,
+    ...otherProps
+  }) => {
     const fieldId = uniqueId('form-field-');
-    
-    if (typeof children === 'function') return children({ ...otherProps, fieldId, className, label, tip, error, silentError, name });
-    
+
+    if (typeof children === 'function')
+      return children({ ...otherProps, fieldId, className, label, tip, error, silentError, name });
+
     return (
       <StyledField
-      className={className}
-      hasLabel={!!label}
-      data-testid={name ? `form-field:${name}` : 'form-field'}
+        className={className}
+        hasLabel={!!label}
+        data-testid={name ? `form-field:${name}` : 'form-field'}
       >
         {label && <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>}
         <FormComponent id={fieldId} invalid={!!error} name={name} error={error} {...otherProps}>

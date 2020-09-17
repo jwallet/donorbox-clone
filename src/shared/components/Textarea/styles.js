@@ -17,14 +17,14 @@ export const StyledTextarea = styled.div`
     ${font.regular}
     ${font.size(15)}
     &:hover {
-        background: ${color.backgroundLight};
+      background: ${color.backgroundLight};
     }
     &:focus {
       background: #fff;
       border: 1px solid ${color.borderInputFocus};
       box-shadow: 0 0 0 1px ${color.borderInputFocus};
     }
-    ${props =>
+    ${(props) =>
       props.invalid &&
       css`
         &,

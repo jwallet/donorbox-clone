@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { mixin, font, color } from "shared/utils/styles";
+import styled, { css } from 'styled-components';
+import { mixin, font, color } from 'shared/utils/styles';
 
 export const StyledButton = styled.button`
   position: relative;
@@ -14,25 +14,25 @@ export const StyledButton = styled.button`
   appearance: none;
   ${mixin.clickable}
   ${font.size(18)}
-  ${props => buttonVariants[props.variant]}
+  ${(props) => buttonVariants[props.variant]}
   &:disabled {
-      opacity: 0.6;
-      cursor: default;
+    opacity: 0.6;
+    cursor: default;
   }
 `;
 
 const colored = css`
   color: #fff;
-  background: ${props => color[props.variant]};
+  background: ${(props) => color[props.variant]};
   ${font.medium}
   &:not(:disabled) {
     &:hover {
-      background: ${props => mixin.lighten(color[props.variant], 0.15)};
+      background: ${(props) => mixin.lighten(color[props.variant], 0.15)};
     }
     &:active {
-      background: ${props => mixin.darken(color[props.variant], 0.1)};
+      background: ${(props) => mixin.darken(color[props.variant], 0.1)};
     }
-    ${props =>
+    ${(props) =>
       props.isActive &&
       css`
         background: ${mixin.darken(color[props.variant], 0.1)} !important;
@@ -51,7 +51,7 @@ const secondaryAndEmptyShared = css`
       color: ${color.primary};
       background: ${color.backgroundLightPrimary};
     }
-    ${props =>
+    ${(props) =>
       props.isActive &&
       css`
         color: ${color.primary};
@@ -60,17 +60,16 @@ const secondaryAndEmptyShared = css`
   }
 `;
 
-
 const buttonVariants = {
-    primary: colored,
-    success: colored,
-    danger: colored,
-    secondary: css`
-      background: ${color.secondary};
-      ${secondaryAndEmptyShared};
-    `,
-    empty: css`
-      background: #fff;
-      ${secondaryAndEmptyShared};
-    `,
-  };
+  primary: colored,
+  success: colored,
+  danger: colored,
+  secondary: css`
+    background: ${color.secondary};
+    ${secondaryAndEmptyShared};
+  `,
+  empty: css`
+    background: #fff;
+    ${secondaryAndEmptyShared};
+  `,
+};

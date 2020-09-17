@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { color, mixin } from "shared/utils/styles";
+import styled, { css } from 'styled-components';
+import { color, mixin } from 'shared/utils/styles';
 
 export const Container = styled.span`
   background: ${color.backgroundDarkPrimary};
@@ -62,8 +62,8 @@ export const Back = styled.button`
     }
     &::before {
       transform: translate(30%);
-    }`
-  }
+    }
+  `}
 `;
 
 export const Forward = styled.button`
@@ -76,6 +76,6 @@ export const Forward = styled.button`
     }
     &::before {
       transform: translate(20%);
-    }`
-  }
+    }
+  `}
 `;

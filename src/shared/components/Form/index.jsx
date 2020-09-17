@@ -22,7 +22,7 @@ const defaultProps = {
 const Form = ({ validate, validations, ...otherProps }) => (
   <Formik
     {...otherProps}
-    validate={values => {
+    validate={(values) => {
       if (validate) {
         return validate(values);
       }
@@ -34,25 +34,29 @@ const Form = ({ validate, validations, ...otherProps }) => (
   />
 );
 
-Form.Element = props => <FormikForm noValidate {...props} />;
+Form.Element = (props) => <FormikForm noValidate {...props} />;
 
-Form.Field = mapValues(Field, FieldComponent => ({ name, validate, onChange: emitChange, ...props }) => (
-  <FormikField name={name} validate={validate}>
-    {({ field, form: { touched, errors, setFieldValue, setFieldTouched } }) => (
-      <FieldComponent
-        {...field}
-        {...props}
-        name={name}
-        error={get(touched, name) ? get(errors, name) : undefined}
-        onChange={value => {
-          setFieldValue(name, value);
-          if (typeof emitChange === 'function') {
-            emitChange(value, setFieldValue, setFieldTouched);
-          }
-        }} />
-    )}
-  </FormikField>
-));
+Form.Field = mapValues(
+  Field,
+  (FieldComponent) => ({ name, validate, onChange: emitChange, ...props }) => (
+    <FormikField name={name} validate={validate}>
+      {({ field, form: { touched, errors, setFieldValue, setFieldTouched } }) => (
+        <FieldComponent
+          {...field}
+          {...props}
+          name={name}
+          error={get(touched, name) ? get(errors, name) : undefined}
+          onChange={(value) => {
+            setFieldValue(name, value);
+            if (typeof emitChange === 'function') {
+              emitChange(value, setFieldValue, setFieldTouched);
+            }
+          }}
+        />
+      )}
+    </FormikField>
+  ),
+);
 
 Form.initialValues = (data, getFieldValues) =>
   getFieldValues((key, defaultValue = '') => {

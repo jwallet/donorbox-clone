@@ -25,8 +25,8 @@ export const addToQueryString = (str, fields) =>
 export const navigateToUrl = (url, { inNewTab = false }) => {
   const a = document.createElement('a');
   a.href = url;
-  a.target = inNewTab ? "_blank" : "";
+  a.target = inNewTab ? '_blank' : '';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-}
+};

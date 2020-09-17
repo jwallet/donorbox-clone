@@ -17,7 +17,7 @@ export const color = {
 
   backgroundDarkPrimary: '#339911',
   backgroundLightPrimary: '#C2F5CC',
-  
+
   backgroundDark: '#aaa',
   backgroundMedium: '#ddd',
   backgroundLight: '#efefef',
@@ -42,22 +42,13 @@ export const font = {
   medium: 'font-family: Verdana; font-weight: normal;',
   bold: 'font-family: Verdana; font-weight: 600;',
   black: 'font-family: Verdana; font-weight: normal; color: black;',
-  size: size => `font-size: ${size}px;`,
+  size: (size) => `font-size: ${size}px;`,
 };
 
 export const mixin = {
-  darken: (colorValue, amount) =>
-    Color(colorValue)
-      .darken(amount)
-      .string(),
-  lighten: (colorValue, amount) =>
-    Color(colorValue)
-      .lighten(amount)
-      .string(),
-  rgba: (colorValue, opacity) =>
-    Color(colorValue)
-      .alpha(opacity)
-      .string(),
+  darken: (colorValue, amount) => Color(colorValue).darken(amount).string(),
+  lighten: (colorValue, amount) => Color(colorValue).lighten(amount).string(),
+  rgba: (colorValue, opacity) => Color(colorValue).alpha(opacity).string(),
   boxShadowMedium: css`
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
   `,
@@ -83,7 +74,7 @@ export const mixin = {
     bottom: 0;
     left: 0;
   `,
-  placeholderColor: colorValue => css`
+  placeholderColor: (colorValue) => css`
     ::-webkit-input-placeholder {
       color: ${colorValue} !important;
       opacity: 1 !important;
@@ -118,8 +109,8 @@ export const mixin = {
       background: ${background};
     }
   `,
-  backgroundImage: imageURL => css`
-    background-image: url("${imageURL}");
+  backgroundImage: (imageURL) => css`
+    background-image: url('${imageURL}');
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: cover;

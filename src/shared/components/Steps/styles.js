@@ -21,7 +21,7 @@ export const Item = styled.span`
       content: '';
       border-radius: 50%;
       border: 2px solid ${color.backgroundLightPrimary};
-      ${props => `
+      ${(props) => `
         background-color: ${props.active ? color.backgroundLightPrimary : ''};
       `}
       ${mixin.cover}

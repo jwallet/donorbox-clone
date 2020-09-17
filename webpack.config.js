@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: ["@babel/polyfill", path.join(__dirname, 'src/index.jsx')],
+  entry: ['@babel/polyfill', path.join(__dirname, 'src/index.jsx')],
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dev'),
@@ -47,7 +47,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
-    //   favicon: path.join(__dirname, 'src/favicon.png'),
+      //   favicon: path.join(__dirname, 'src/favicon.png'),
     }),
   ],
 };

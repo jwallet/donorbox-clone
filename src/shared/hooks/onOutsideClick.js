@@ -12,13 +12,13 @@ const useOnOutsideClick = (
   const $ignoredElementRefsMemoized = useDeepCompareMemoize([$ignoredElementRefs].flat());
 
   useEffect(() => {
-    const handleMouseDown = event => {
+    const handleMouseDown = (event) => {
       $mouseDownTargetRef.current = event.target;
     };
 
-    const handleMouseUp = event => {
+    const handleMouseUp = (event) => {
       const isAnyIgnoredElementParentOfTarget = $ignoredElementRefsMemoized.some(
-        $elementRef =>
+        ($elementRef) =>
           $elementRef.current.contains($mouseDownTargetRef.current) ||
           $elementRef.current.contains(event.target),
       );

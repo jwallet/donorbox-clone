@@ -19,7 +19,7 @@ const defaultProps = {
 };
 
 const Input = forwardRef(({ className, filter, onChange, ...inputProps }, ref) => {
-  const handleChange = event => {
+  const handleChange = (event) => {
     if (!filter || filter.test(event.target.value)) {
       onChange(event.target.value, event);
     }

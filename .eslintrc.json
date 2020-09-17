@@ -35,7 +35,6 @@
       "jsx-a11y/click-events-have-key-events": 0
     },
     "settings": {
-      // Allows us to lint absolute imports within codebase
       "import/resolver": {
         "node": {
           "moduleDirectory": ["node_modules", "src/"]

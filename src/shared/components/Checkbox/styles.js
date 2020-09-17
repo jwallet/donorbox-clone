@@ -20,7 +20,7 @@ export const Label = styled.label`
   &:focus-within {
     color: ${color.textDarkest};
   }
-  ${props =>
+  ${(props) =>
     props.invalid &&
     css`
       &,
@@ -33,11 +33,12 @@ export const Label = styled.label`
 export const CheckElement = styled.span`
   width: 1.2em;
   height: 1.2em;
-  border: 2px solid ${props => {
-    if (props.invalid) return color.danger;
-    if (props.checked) return color.primary;
-    return color.borderLightest;
-  }};
+  border: 2px solid
+    ${(props) => {
+      if (props.invalid) return color.danger;
+      if (props.checked) return color.primary;
+      return color.borderLightest;
+    }};
   border-radius: 15%;
   position: absolute;
   left: 0;
@@ -47,7 +48,7 @@ export const CheckElement = styled.span`
   label:focus-within & {
     border-color: ${color.borderInputFocus};
   }
-  ${props =>
+  ${(props) =>
     props.checked &&
     css`
       &::before {
@@ -67,7 +68,7 @@ export const CheckElement = styled.span`
         border-width: 0 0.2em 0.2em 0;
         border-color: white;
         border-style: solid;
-        transform: translate3d(0.3em,-60%,0) scale(.7) rotate(40deg) skewY(20deg);
+        transform: translate3d(0.3em, -60%, 0) scale(0.7) rotate(40deg) skewY(20deg);
       }
     `}
 `;
