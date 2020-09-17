@@ -1,8 +1,8 @@
 export const AmounItemEnum = {
-    COFFEE: 'coffee',
-    BEER: 'beer',
-    BEERS: 'beers',
-    CUSTOM: 'custom',
+    COFFEE: 'COFFEE',
+    BEER: 'BEER',
+    BEERS: 'BEERS',
+    CUSTOM: 'CUSTOM',
 };
 
 export const AmountItemLabel = {

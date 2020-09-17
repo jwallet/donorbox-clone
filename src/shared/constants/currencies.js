@@ -1,10 +1,10 @@
 export const CurrenciesEnum = {
-    AUD: 'aud',
-    BRL: 'brl',
-    CAD: 'cad',
-    EUR: 'eur',
-    GBP: 'gbp',
-    USD: 'usd',
+    AUD: 'AUD',
+    BRL: 'BRL',
+    CAD: 'CAD',
+    EUR: 'EUR',
+    GBP: 'GBP',
+    USD: 'USD',
 };
 
 export const CurrenciesSymbol = {
@@ -43,4 +43,4 @@ export const currencyConverterUSD = {
     [CurrenciesEnum.USD] : 1,
 };
 
-export const getConvertedAmount = (amount, currency) => Math.ceil((currencyConverterUSD[currency] || 1) * amount);
+export const getConvertedAmount = (rates, amount, currency) => Math.ceil((rates[currency] || 1) * amount);
