@@ -14,7 +14,7 @@ const proceedToPaypal = (bag) => {
     email: bag.email,
     first_name: bag.firstName,
     last_name: bag.lastName,
-    item_number: bag.amountItemLabel,
+    item_number: bag.giftItemLabel,
     bn: BUTTON_NAME,
     business: BUSINESS_NAME,
     charset: 'utf-8',
@@ -36,7 +36,7 @@ const saveDataToCookie = async (bag) => {
   const payload = {
     donation,
     donor,
-    amountItemLabel: bag.amountItemLabel,
+    giftItemLabel: bag.giftItemLabel,
     email: bag.email,
     wantsToComment: bag.wantsToComment,
     comment: bag.comment,

@@ -8,6 +8,7 @@ import { StepsEnum } from 'shared/constants/steps';
 import { AmounItemEnum } from 'shared/constants/amounts';
 import Button from 'shared/components/Button';
 import { StyledField, StyledForm } from 'shared/components/Form/styles';
+import { usePaypalPaymentSucceeded } from 'shared/hooks/paypal';
 import BaseStyles from './BaseStyles';
 import NormalizeStyles from './NormalizeStyles';
 import Header from './app/Header';
@@ -18,7 +19,7 @@ import PaymentForm from './app/PaymentForm';
 const initialValues = {
   [StepsEnum.AMOUNT]: {
     amount: null,
-    amountItem: '',
+    giftItem: '',
     customAmount: null,
     currency: CurrenciesEnum.USD,
     wantsToComment: false,
@@ -41,7 +42,7 @@ const validAmount = (message) => (value, { customAmount }) => {
 const validations = {
   [StepsEnum.AMOUNT]: {
     currency: Form.is.required(),
-    amountItem: validAmount('Please select or enter an amount'),
+    giftItem: validAmount('Please select or enter an amount'),
   },
   [StepsEnum.DONOR]: {
     firstName: (value, { wantsToBeAnonymous }) => !wantsToBeAnonymous && Form.is.required()(value),
@@ -53,23 +54,23 @@ const validations = {
 const handleSubmit = ({ formsBag, setFormsBag, step, setStep }) => async (values) => {
   switch (step) {
     case StepsEnum.AMOUNT: {
-      const { amountItem, customAmount } = values;
+      const { giftItem, customAmount } = values;
       const amount =
-        amountItem === AmounItemEnum.CUSTOM
+        giftItem === AmounItemEnum.CUSTOM
           ? customAmount
-          : AmountForm.DonationOptionsUSD.find((d) => d.value === amountItem).amount;
+          : AmountForm.giftOptionsUSD.find((d) => d.value === giftItem).amount;
       setFormsBag({ ...formsBag, [step]: { ...values, amount } });
       setStep(step + 1);
       break;
     }
     case StepsEnum.PAYMENT: {
       const bag = Object.values(formsBag).reduce((acc, x) => ({ ...acc, ...x }), values);
-      const amountItemLabel = get(
-        AmountForm.DonationOptionsUSD.find((d) => d.value === bag.amountItem),
+      const giftItemLabel = get(
+        AmountForm.giftOptionsUSD.find((d) => d.value === bag.giftItem),
         'label',
         '',
       );
-      const updatedBag = { ...bag, amountItemLabel };
+      const updatedBag = { ...bag, giftItemLabel };
       await Paypal.saveDataToCookie(updatedBag);
       await SlackNotifier.paymentAttempt(updatedBag);
       await Paypal.proceedToPaypal(updatedBag);
@@ -87,16 +88,7 @@ const Base = () => {
   const [step, setStep] = React.useState(StepsEnum.AMOUNT);
   const [formsBag, setFormsBag] = React.useState({});
 
-  React.useLayoutEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has(Paypal.COOKIE_NAME)) {
-      const cookieId = params.get(Paypal.COOKIE_NAME);
-      if (!Paypal.doesCookieExists(cookieId)) return;
-      const bag = Paypal.getCookieToData(cookieId);
-      SlackNotifier.paymentSucceeded(bag);
-      Paypal.eraseCookie(cookieId);
-    }
-  }, []);
+  usePaypalPaymentSucceeded();
 
   return (
     <React.Fragment>

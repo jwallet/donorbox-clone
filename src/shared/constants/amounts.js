@@ -5,13 +5,13 @@ export const AmounItemEnum = {
   CUSTOM: 'CUSTOM',
 };
 
-export const AmountItemLabel = {
+export const GiftItemLabel = {
   [AmounItemEnum.COFFEE]: 'A Coffee ☕',
   [AmounItemEnum.BEER]: 'A Beer 🍺',
   [AmounItemEnum.BEERS]: 'More beers 🍻',
 };
 
-export const AmountItemBasePrice = {
+export const GiftItemBasePrice = {
   [AmounItemEnum.COFFEE]: 4,
   [AmounItemEnum.BEER]: 8,
   [AmounItemEnum.BEERS]: 16,

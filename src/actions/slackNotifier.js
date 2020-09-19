@@ -24,7 +24,7 @@ const paymentSucceeded = async (data) => {
       JSON.stringify({
         channel: SLACK_CHANNEL,
         text: `<!here|here> New donation of \`${data.donation}\` 🎉\n${
-          data.amountItemLabel || 'Love 💖'
+          data.giftItemLabel || 'Love 💖'
         } from ${data.donor} ${data.email}`,
         attachments: data.wantsToComment ? [{ text: data.comment }] : [],
       }),

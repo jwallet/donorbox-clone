@@ -1,9 +1,9 @@
 import styled, { css } from 'styled-components';
-import { color, mixin } from 'shared/utils/styles';
+import { color, mixin, font } from 'shared/utils/styles';
 
 export const Container = styled.span`
   background: ${color.backgroundDarkPrimary};
-  padding: 1rem 1.5rem;
+  padding: 1rem 2%;
   display: flex;
   justify-content: space-between;
 `;
@@ -48,7 +48,7 @@ const arrowButtonStyle = css`
   }
   &:disabled::after,
   &:disabled::before {
-    border-color: ${color.backgroundLightPrimary};
+    border-color: transparent;
   }
 `;
 
@@ -78,4 +78,16 @@ export const Forward = styled.button`
       transform: translate(20%);
     }
   `}
+`;
+
+export const Heading = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const Title = styled.span`
+  ${font.medium}
+  ${font.size(20)}
+  color: ${color.backgroundLightPrimary};
 `;

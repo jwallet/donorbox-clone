@@ -4,23 +4,31 @@ import {
   CurrenciesEnum,
   Currencies,
   CurrenciesSymbol,
-  currenciesList,
   getConvertedAmount,
-  currencyConverterUSD,
+  currencyRatesAmericanBasedStatic,
 } from 'shared/constants/currencies';
 import { FieldError } from 'shared/components/Form/styles';
 import getLatestRates from 'actions/currency';
 import { Form } from 'shared/components';
-import { AmounItemEnum, AmountItemLabel, AmountItemBasePrice } from 'shared/constants/amounts';
+import { AmounItemEnum, GiftItemLabel, GiftItemBasePrice } from 'shared/constants/amounts';
 import Input from 'shared/components/Input';
 import { Amount, Description, Device, Donation, StyledDevice } from './styles';
 
-const amountItemsList = [AmounItemEnum.COFFEE, AmounItemEnum.BEER, AmounItemEnum.BEERS];
+const giftItemsList = [AmounItemEnum.COFFEE, AmounItemEnum.BEER, AmounItemEnum.BEERS];
 
-const donationOptionsUSD = amountItemsList.map((a) => ({
+const currenciesList = [
+  CurrenciesEnum.AUD,
+  CurrenciesEnum.BRL,
+  CurrenciesEnum.CAD,
+  CurrenciesEnum.EUR,
+  CurrenciesEnum.GBP,
+  CurrenciesEnum.USD,
+];
+
+const giftOptionsUSD = giftItemsList.map((a) => ({
   value: a,
-  label: AmountItemLabel[a],
-  amount: AmountItemBasePrice[a],
+  label: GiftItemLabel[a],
+  amount: GiftItemBasePrice[a],
 }));
 
 const currencyOptions = currenciesList.map((c) => ({ value: c, label: Currencies[c] }));
@@ -37,7 +45,7 @@ const setCustomAmountValue = (stringValue, on) => {
 };
 
 const AmountForm = ({ currency, wantsToComment }) => {
-  const [rates, setRates] = React.useState(currencyConverterUSD);
+  const [rates, setRates] = React.useState(currencyRatesAmericanBasedStatic);
 
   React.useEffect(() => {
     const ratesToDate = getLatestRates();
@@ -56,9 +64,9 @@ const AmountForm = ({ currency, wantsToComment }) => {
         withClearValue={false}
       />
       <Form.Field.Radio
-        name="amountItem"
+        name="giftItem"
         label="Amount"
-        options={donationOptionsUSD}
+        options={giftOptionsUSD}
         customValue={AmounItemEnum.CUSTOM}
         custom
         silentError
@@ -90,7 +98,7 @@ const AmountForm = ({ currency, wantsToComment }) => {
                     onChange={(v) => onChange(v.trim())}
                     onBlur={(e) => setCustomAmountValue(e.target.value, onChange)}
                     onFocus={(e) => {
-                      setChoice(donationOptionsUSD.length);
+                      setChoice(giftOptionsUSD.length);
                       setCustomAmountValue(e.target.value, onChange);
                       setValue(AmounItemEnum.CUSTOM);
                       onAmounItemChange(AmounItemEnum.CUSTOM, e);
@@ -117,7 +125,7 @@ const AmountForm = ({ currency, wantsToComment }) => {
   );
 };
 
-AmountForm.DonationOptionsUSD = donationOptionsUSD;
+AmountForm.giftOptionsUSD = giftOptionsUSD;
 
 AmountForm.propTypes = {
   currency: PropTypes.oneOf(currenciesList),
