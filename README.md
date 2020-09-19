@@ -12,13 +12,15 @@
 
 | Amount Form                                                                                                    | Donate Form                                                                                                    | Payment Form                                                                                                   |
 | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| ![image](https://user-images.githubusercontent.com/23088305/93038512-3b6c8280-f613-11ea-84f4-ae5510b91cc4.png) | ![image](https://user-images.githubusercontent.com/23088305/93038572-6060f580-f613-11ea-9664-5625e3921927.png) | ![image](https://user-images.githubusercontent.com/23088305/93157593-84d2d580-f6d8-11ea-9605-5843672920b0.png) |
+| ![amount](https://user-images.githubusercontent.com/23088305/93659997-a7d2f180-fa18-11ea-99c5-9c220fbecb0f.png) | ![donor](https://user-images.githubusercontent.com/23088305/93660075-68f16b80-fa19-11ea-9ce4-210152bd711b.png) | ![payment](https://user-images.githubusercontent.com/23088305/93660008-ba4d2b00-fa18-11ea-995b-1e1d36714db1.png) |
 | Only support One-Time Donation                                                                                 | Limited Donor info fields                                                                                      | Only supports Paypal                                                                                           |
 
 ### What it does
 
 - It's free to use, no Donorbox processing fee, no more monthly bills to pay.
-- It sends a notification to a Slack channel (with a backend: use Paypal `notify_url` url param instead)
+- It uses a free [Slack](https://slack.com/intl/en-ca/) channel to receive notifications about new donations.
+  - This is how and where the form data is saved: amount, comment and donor info.
+  - If you have access to a backend, use Paypal `notify_url` (POST) or `return` (GET/POST) [url param](https://github.com/jwallet/donate/blob/master/src/actions/paypal.js#L11:L28).
 
 ![image](https://user-images.githubusercontent.com/23088305/93408942-c479f880-f863-11ea-9a64-4523d4a70961.png)
 

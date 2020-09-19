@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { round } from 'lodash';
 import { Currencies, CurrenciesSymbol, CurrenciesEnum } from 'shared/constants/currencies';
 import Button from 'shared/components/Button';
 import { StyledField } from 'shared/components/Form/styles';
@@ -16,7 +15,7 @@ const PaymentForm = ({ amount, currency }) => {
       </Container>
       <StyledField>
         <Button type="submit" variant="primary" style={{ width: '100%' }}>
-          {`Donate ${[currencySymbol, round(amount, 2)].join(' ')} One-time`}
+          {`Donate ${[currencySymbol, amount.toFixed(2)].join('')}`}
         </Button>
       </StyledField>
     </React.Fragment>

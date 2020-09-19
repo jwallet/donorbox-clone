@@ -70,8 +70,8 @@ const handleSubmit = ({ formsBag, setFormsBag, step, setStep }) => async (values
         '',
       );
       const updatedBag = { ...bag, amountItemLabel };
+      await Paypal.saveDataToCookie(updatedBag);
       await SlackNotifier.paymentAttempt(updatedBag);
-      Paypal.saveDataToCookie(updatedBag);
       await Paypal.proceedToPaypal(updatedBag);
       return;
     }
@@ -86,6 +86,17 @@ const handleSubmit = ({ formsBag, setFormsBag, step, setStep }) => async (values
 const Base = () => {
   const [step, setStep] = React.useState(StepsEnum.AMOUNT);
   const [formsBag, setFormsBag] = React.useState({});
+
+  React.useLayoutEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has(Paypal.COOKIE_NAME)) {
+      const cookieId = params.get(Paypal.COOKIE_NAME);
+      if (!Paypal.doesCookieExists(cookieId)) return;
+      const bag = Paypal.getCookieToData(cookieId);
+      SlackNotifier.paymentSucceeded(bag);
+      Paypal.eraseCookie(cookieId);
+    }
+  }, []);
 
   return (
     <React.Fragment>

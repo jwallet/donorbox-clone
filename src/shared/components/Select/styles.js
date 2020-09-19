@@ -65,7 +65,7 @@ export const Chevron = styled.span`
   overflow: hidden;
   display: flex;
   flex: auto;
-  justify-content: right;
+  justify-content: flex-end;
   &::after {
     content: '';
     width: 1rem;

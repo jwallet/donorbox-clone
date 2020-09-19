@@ -5,7 +5,7 @@ const setCookie = (name, value, hours) => {
     date.setTime(date.getTime() + hours * 60 * 60 * 1000);
     expires = `; expires=${date.toUTCString()}`;
   }
-  document.cookie = `${name}=${value || ''}${expires}; path=/`;
+  document.cookie = `${name}=${value || ''}${expires}; Path=/; SameSite=Lax;`;
 };
 
 const getCookie = (name) => {
