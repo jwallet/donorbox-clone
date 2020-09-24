@@ -1,6 +1,7 @@
 import React from 'react';
 import SlackNotifier from 'actions/slackNotifier';
 import Paypal from 'actions/paypal';
+import { PaymentModesEnum } from 'shared/constants/payments';
 
 export const usePaypalPaymentSucceeded = () => {
   React.useLayoutEffect(() => {
@@ -9,7 +10,7 @@ export const usePaypalPaymentSucceeded = () => {
       const cookieId = params.get(Paypal.COOKIE_NAME);
       if (!Paypal.doesCookieExists(cookieId)) return;
       const bag = Paypal.getCookieToData(cookieId);
-      SlackNotifier.paymentSucceeded(bag);
+      SlackNotifier.paymentSucceeded(PaymentModesEnum.PAYPAL, bag);
       Paypal.eraseCookie(cookieId);
     }
   }, []);

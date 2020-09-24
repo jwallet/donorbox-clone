@@ -90,4 +90,5 @@ export const Title = styled.span`
   ${font.medium}
   ${font.size(20)}
   color: ${color.backgroundLightPrimary};
+  text-align: center;
 `;

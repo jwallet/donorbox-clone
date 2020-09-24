@@ -7,14 +7,14 @@ import {
   getConvertedAmount,
   currencyRatesAmericanBasedStatic,
 } from 'shared/constants/currencies';
-import { FieldError } from 'shared/components/Form/styles';
+import { FieldError, StyledForm } from 'shared/components/Form/styles';
 import getLatestRates from 'actions/currency';
 import { Form } from 'shared/components';
-import { AmounItemEnum, GiftItemLabel, GiftItemBasePrice } from 'shared/constants/amounts';
+import { GiftItemsEnum, GiftItems, GiftItemsBasePrice } from 'shared/constants/amounts';
 import Input from 'shared/components/Input';
 import { Amount, Description, Device, Donation, StyledDevice } from './styles';
 
-const giftItemsList = [AmounItemEnum.COFFEE, AmounItemEnum.BEER, AmounItemEnum.BEERS];
+const giftItemsList = [GiftItemsEnum.COFFEE, GiftItemsEnum.BEER, GiftItemsEnum.BEERS];
 
 const currenciesList = [
   CurrenciesEnum.AUD,
@@ -27,8 +27,8 @@ const currenciesList = [
 
 const giftOptionsUSD = giftItemsList.map((a) => ({
   value: a,
-  label: GiftItemLabel[a],
-  amount: GiftItemBasePrice[a],
+  label: GiftItems[a],
+  amount: GiftItemsBasePrice[a],
 }));
 
 const currencyOptions = currenciesList.map((c) => ({ value: c, label: Currencies[c] }));
@@ -55,7 +55,7 @@ const AmountForm = ({ currency, wantsToComment }) => {
   }, []);
 
   return (
-    <React.Fragment>
+    <StyledForm>
       <Form.Field.Select
         name="currency"
         label="Currency"
@@ -67,7 +67,7 @@ const AmountForm = ({ currency, wantsToComment }) => {
         name="giftItem"
         label="Amount"
         options={giftOptionsUSD}
-        customValue={AmounItemEnum.CUSTOM}
+        customValue={GiftItemsEnum.CUSTOM}
         custom
         silentError
         renderValue={({ amount, label: description }, active) => (
@@ -100,8 +100,8 @@ const AmountForm = ({ currency, wantsToComment }) => {
                     onFocus={(e) => {
                       setChoice(giftOptionsUSD.length);
                       setCustomAmountValue(e.target.value, onChange);
-                      setValue(AmounItemEnum.CUSTOM);
-                      onAmounItemChange(AmounItemEnum.CUSTOM, e);
+                      setValue(GiftItemsEnum.CUSTOM);
+                      onAmounItemChange(GiftItemsEnum.CUSTOM, e);
                     }}
                   />
                   <Description>
@@ -121,7 +121,7 @@ const AmountForm = ({ currency, wantsToComment }) => {
       {wantsToComment && (
         <Form.Field.Textarea name="comment" label="Your comment" validate={Form.is.required()} />
       )}
-    </React.Fragment>
+    </StyledForm>
   );
 };
 

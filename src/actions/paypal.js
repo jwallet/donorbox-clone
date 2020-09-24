@@ -1,6 +1,5 @@
 import { BUSINESS_NAME, BUTTON_NAME, PAYPAL_DONATION_HEADING, BASE_URL } from 'constant';
 import { setCookie, getCookie, eraseCookie } from 'shared/cookies';
-import { CurrenciesSymbol } from 'shared/constants/currencies';
 import { navigateToUrl } from '../shared/utils/url';
 
 let cookieId;
@@ -29,22 +28,17 @@ const proceedToPaypal = (bag) => {
   navigateToUrl(`https://www.paypal.com/donate?${params.toString()}`, { inNewTab: false });
 };
 
-const saveDataToCookie = async (bag) => {
-  const donation = `${CurrenciesSymbol[bag.currency]} ${bag.amount.toFixed(2)}`;
-  const donor = `${bag.wantsToBeAnonymous ? 'Anonymous' : [bag.firstName, bag.lastName].join(' ')}`;
-
+const saveDataToCookie = (bag) => {
   const payload = {
-    donation,
-    donor,
+    donation: bag.donation,
+    donor: bag.donor,
     giftItemLabel: bag.giftItemLabel,
     email: bag.email,
     wantsToComment: bag.wantsToComment,
     comment: bag.comment,
   };
-
   cookieId = new Date().valueOf();
-
-  await setCookie(`${COOKIE_NAME}-${cookieId}`, JSON.stringify(payload), COOKIE_HOURS);
+  setCookie(`${COOKIE_NAME}-${cookieId}`, JSON.stringify(payload), COOKIE_HOURS);
 };
 
 const getCookieToData = (id) => {

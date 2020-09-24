@@ -30,7 +30,11 @@ module.exports = {
         ],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/,
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/,
         use: [
           {
             loader: 'url-loader',

@@ -5,7 +5,7 @@ export const StepsEnum = {
 };
 
 export const StepsHeading = {
-  [StepsEnum.AMOUNT]: 'Choose Amount',
+  [StepsEnum.AMOUNT]: 'Amount',
   [StepsEnum.DONOR]: 'Information',
   [StepsEnum.PAYMENT]: 'Payment',
 };

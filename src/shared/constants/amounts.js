@@ -1,18 +1,18 @@
-export const AmounItemEnum = {
+export const GiftItemsEnum = {
   COFFEE: 'COFFEE',
   BEER: 'BEER',
   BEERS: 'BEERS',
   CUSTOM: 'CUSTOM',
 };
 
-export const GiftItemLabel = {
-  [AmounItemEnum.COFFEE]: 'A Coffee ☕',
-  [AmounItemEnum.BEER]: 'A Beer 🍺',
-  [AmounItemEnum.BEERS]: 'More beers 🍻',
+export const GiftItems = {
+  [GiftItemsEnum.COFFEE]: 'A Coffee ☕',
+  [GiftItemsEnum.BEER]: 'A Beer 🍺',
+  [GiftItemsEnum.BEERS]: 'More beers 🍻',
 };
 
-export const GiftItemBasePrice = {
-  [AmounItemEnum.COFFEE]: 4,
-  [AmounItemEnum.BEER]: 8,
-  [AmounItemEnum.BEERS]: 16,
+export const GiftItemsBasePrice = {
+  [GiftItemsEnum.COFFEE]: 4,
+  [GiftItemsEnum.BEER]: 8,
+  [GiftItemsEnum.BEERS]: 16,
 };

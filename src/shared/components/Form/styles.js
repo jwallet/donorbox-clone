@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import { color, font } from 'shared/utils/styles';
 
 export const StyledField = styled.div`
+  flex: 1;
   margin-top: 20px;
   margin-left: 10px;
   margin-right: 10px;
+`;
+
+export const StyledFieldInline = styled.div`
+  display: flex;
 `;
 
 export const StyledForm = styled.div`

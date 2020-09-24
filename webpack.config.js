@@ -22,7 +22,11 @@ module.exports = {
         use: ['style-loader', { loader: 'css-loader' }],
       },
       {
-        test: /\.(jpe?g|png|gif|woff2?|eot|ttf|otf|svg)$/,
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
+      {
+        test: /\.(jpe?g|png|gif|woff2?|eot|ttf|otf)$/,
         use: [
           {
             loader: 'url-loader',
