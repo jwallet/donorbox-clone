@@ -10,10 +10,10 @@
 
 ![image](https://user-images.githubusercontent.com/23088305/93079551-4dbddf00-f65a-11ea-8658-0b088652d44a.png)
 
-| Amount Form                                                                                                    | Donate Form                                                                                                    | Payment Form                                                                                                   |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| ![amount](https://user-images.githubusercontent.com/23088305/93659997-a7d2f180-fa18-11ea-99c5-9c220fbecb0f.png) | ![donor](https://user-images.githubusercontent.com/23088305/93660075-68f16b80-fa19-11ea-9ce4-210152bd711b.png) | ![payment](https://user-images.githubusercontent.com/23088305/93660008-ba4d2b00-fa18-11ea-995b-1e1d36714db1.png) |
-| Only support One-Time Donation                                                                                 | Limited Donor info fields                                                                                      | Only supports Paypal                                                                                           |
+| Choose Amount                                                                             | Donor Info                                                                              | Payment (Card)                                                                                    | Payment (Paypal)                                                                                  |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| ![amount](https://raw.githubusercontent.com/jwallet/donate/master/screens/app_amount.png) | ![donor](https://raw.githubusercontent.com/jwallet/donate/master/screens/app_donor.png) | ![payment-stripe](https://raw.githubusercontent.com/jwallet/donate/master/screens/app_stripe.png) | ![payment-paypal](https://raw.githubusercontent.com/jwallet/donate/master/screens/app_paypal.png) |
+| Only support One-Time Donation                                                            | Limited Donor info fields                                                               | Credit card fields and payment secured by Stripe                                                  | Redirect the payment to Paypal                                                                    |
 
 ### What it does
 
@@ -29,6 +29,5 @@
 - It doesn't send email... yet.
 - It doesn't keep track of all donations.
 - It doesn't do recurring donation, only one-time donation.
-- It only supports Paypal, Stripe may come in the near future.
 
 > `*` [Donorbox]("https://donorbox.org/") is a fundraising webapp that adds 1.5% of processing fees on top of your donations for providing a small form that links to Paypal and for keeping tracks of past donations with access to a dashboard and email notifications.
