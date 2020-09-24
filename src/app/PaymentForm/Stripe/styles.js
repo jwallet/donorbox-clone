@@ -69,17 +69,16 @@ export const StyledStripeError = styled.div`
 
 export const StyledCard = styled.span`
   width: 40px;
-  color: ${color.textMedium};
+  color: ${(props) => (props.active ? color.backgroundDarkPrimary : color.textMedium)};
 `;
 
 export const CreditCards = styled.div`
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  margin: 20px 10px;
   div {
     display: flex;
-    width: 400px;
-    justify-content: space-around;
-    min-width: 300px;
+    width: 360px;
+    justify-content: space-between;
   }
 `;

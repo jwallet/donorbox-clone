@@ -15,15 +15,10 @@ import {
   StyledFieldInline,
 } from 'shared/components/Form/styles';
 import { StyledInput } from 'shared/components/Input/styles';
+import { CreditCardsEnum, CreditCardSvgs } from 'shared/constants/creditcards';
 import { Field } from 'formik';
-import { StyledStripeElement, StyledStripeError, CreditCards, StyledCard } from './styles';
 
-import Amex from '../../../assets/svgs/cc-amex.svg';
-import DinersClub from '../../../assets/svgs/cc-diners-club.svg';
-import Discover from '../../../assets/svgs/cc-discover.svg';
-import Jcb from '../../../assets/svgs/cc-jcb.svg';
-import Mastercard from '../../../assets/svgs/cc-mastercard.svg';
-import Visa from '../../../assets/svgs/cc-visa.svg';
+import { StyledStripeElement, StyledStripeError, CreditCards, StyledCard } from './styles';
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -41,6 +36,15 @@ const ELEMENT_OPTIONS = {
   },
 };
 
+const creditCardsList = [
+  CreditCardsEnum.AMEX,
+  CreditCardsEnum.DINERSCLUB,
+  CreditCardsEnum.DISCOVER,
+  CreditCardsEnum.JCB,
+  CreditCardsEnum.MASTERCARD,
+  CreditCardsEnum.VISA,
+];
+
 const validateStripeElement = (stripeElements, Element, entity) => () => {
   const { _empty: empty, _invalid: invalid } = stripeElements.getElement(Element);
   return (empty && 'Required') || (invalid && `Invalid ${entity}`) || '';
@@ -48,6 +52,7 @@ const validateStripeElement = (stripeElements, Element, entity) => () => {
 
 const StripeForm = () => {
   const stripeElements = useElements();
+  const [ccBrand, setCreditCardBrand] = React.useState('');
 
   return (
     <React.Fragment>
@@ -63,9 +68,9 @@ const StripeForm = () => {
       </Field>
       <CreditCards>
         <div>
-          {[Amex, DinersClub, Discover, Jcb, Mastercard, Visa].map((CreditCard, key) => (
-            <StyledCard key={key}>
-              <CreditCard />
+          {creditCardsList.map((cc, key) => (
+            <StyledCard key={key} active={ccBrand === cc}>
+              {React.createElement(CreditCardSvgs[cc])}
             </StyledCard>
           ))}
         </div>
@@ -82,7 +87,10 @@ const StripeForm = () => {
                 <CardNumberElement
                   id="cardNumber"
                   options={ELEMENT_OPTIONS}
-                  onChange={() => setFieldError(name, '')}
+                  onChange={(e) => {
+                    setFieldError(name, '');
+                    if (e.brand !== ccBrand) setCreditCardBrand(e.brand);
+                  }}
                 />
                 <FieldError>{error}</FieldError>
               </StyledStripeElement>
