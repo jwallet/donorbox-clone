@@ -10,23 +10,27 @@ export const Container = styled.span`
 
 export const ArrowButton = styled.button`
   padding: 0;
-  border-radius: 50%;
-  cursor: pointer;
+  height: auto;
+  align-self: center;
+  border: none;
   position: relative;
   background-color: ${color.backgroundDarkPrimary};
-  &:not(:disabled):hover::after,
-  &:not(:disabled):hover::before {
-    border-color: white;
-  }
-  &:not(:disabled):hover {
-    background-color: ${mixin.lighten(color.backgroundDarkPrimary, 0.15)};
+  &:not(:disabled) {
+    color: white;
+    ${font.size(20)}
+    &:hover {
+      cursor: pointer;
+      border-radius: ${(props) => (props.isText ? 4 : 50)}%;
+      background-color: ${mixin.lighten(color.backgroundDarkPrimary, 0.15)};
+      box-shadow: ${(props) =>
+        props.isText ? `0 0 0 10px ${mixin.lighten(color.backgroundDarkPrimary, 0.15)}` : 'none'};
+    }
   }
   &:disabled {
-    cursor: default;
-  }
-  &:disabled::after,
-  &:disabled::before {
-    border-color: transparent;
+    & > ::after,
+    & > ::before {
+      border-color: ${color.backgroundLightPrimary};
+    }
   }
 `;
 

@@ -16,7 +16,7 @@ const Header = ({ step, onStepChange: setStep }) => {
   return (
     <Container>
       <ArrowButton type="button" onClick={decreaseStep} disabled={!canDecrease}>
-        <BackIcon />
+        {canDecrease && <BackIcon />}
       </ArrowButton>
       <Heading>
         <Title>{StepsHeading[step]}</Title>
