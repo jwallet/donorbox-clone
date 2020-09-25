@@ -22,16 +22,16 @@ import { ForwardIcon, StyledForwardIcon } from './styles';
 const initialValues = {
   [StepsEnum.AMOUNT]: {
     amount: null,
-    giftItem: 'CUSTOM',
-    customAmount: 22,
+    giftItem: '',
+    customAmount: null,
     currency: CurrenciesEnum.USD,
     wantsToComment: false,
     comment: '',
   },
   [StepsEnum.DONOR]: {
-    firstName: 'a',
-    lastName: 'b',
-    email: 'a.b@c.com',
+    firstName: '',
+    lastName: '',
+    email: '',
     wantsToBeAnonymous: false,
   },
   [StepsEnum.PAYMENT]: {
