@@ -4,17 +4,16 @@ import { color, font } from 'shared/utils/styles';
 
 export const StyledField = styled.div`
   flex: 1;
-  margin-top: 20px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-top: 1rem;
 `;
 
 export const StyledFieldInline = styled.div`
   display: flex;
+  gap: 1rem;
 `;
 
 export const StyledForm = styled.div`
-  margin: 0 10px;
+  margin: 2rem 1rem;
 `;
 
 export const FieldLabel = styled.label`

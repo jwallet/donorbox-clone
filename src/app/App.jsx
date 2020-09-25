@@ -7,8 +7,6 @@ import { Form } from 'shared/components';
 import { CurrenciesEnum, CurrenciesSymbol } from 'shared/constants/currencies';
 import { StepsEnum } from 'shared/constants/steps';
 import { GiftItemsEnum } from 'shared/constants/amounts';
-import Button from 'shared/components/Button';
-import { StyledField } from 'shared/components/Form/styles';
 import { usePaypalPaymentSucceeded } from 'shared/hooks/paypal';
 
 import { CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
@@ -17,7 +15,7 @@ import Header from './Header';
 import AmountForm from './AmountForm';
 import DonorForm from './DonorForm';
 import PaymentForm from './PaymentForm';
-import { ForwardIcon, StyledForwardIcon } from './styles';
+import { StyledPoweredLink } from './styles';
 
 const initialValues = {
   [StepsEnum.AMOUNT]: {
@@ -100,8 +98,12 @@ const handleSubmit = ({ formsBag, paymentMode, stripeElements, stripe }) => asyn
     case PaymentModesEnum.STRIPE: {
       const card = stripeElements.getElement(CardNumberElement);
       const [error, success] = await Stripe.proceedPayment(stripe, card, updatedBag);
-      if (success) SlackNotifier.paymentSucceeded(PaymentModesEnum.STRIPE, updatedBag);
-      else actions.setFieldError('stripeError', error);
+      if (!success) {
+        actions.setFieldError('stripeError', error);
+        return;
+      }
+      SlackNotifier.paymentSucceeded(PaymentModesEnum.STRIPE, updatedBag);
+
       break;
     }
     default:
@@ -119,46 +121,42 @@ const App = () => {
 
   usePaypalPaymentSucceeded();
 
-  return (
-    <Form
-      enableReinitialize
-      initialValues={{ ...initialValues[step], ...formsBag[step] }}
-      validations={validations[step]}
-      onSubmit={
-        step === StepsEnum.PAYMENT
-          ? handleSubmit({ formsBag, paymentMode, stripeElements, stripe })
-          : handleNextStep({ step, setStep, formsBag, setFormsBag })
-      }
-    >
-      {({ values: { currency, wantsToComment, wantsToCoverFees } }) => (
-        <Form.Element>
-          <Header step={step} onStepChange={setStep} />
 
-          {step === StepsEnum.AMOUNT && (
-            <AmountForm currency={currency} wantsToComment={wantsToComment} />
-          )}
-          {step === StepsEnum.DONOR && <DonorForm />}
-          {step === StepsEnum.PAYMENT ? (
-            <PaymentForm
-              amount={formsBag[StepsEnum.AMOUNT].amount}
-              currency={formsBag[StepsEnum.AMOUNT].currency}
-              wantsToCoverFees={wantsToCoverFees}
-              paymentMode={paymentMode}
-              onPaymentModeChange={setPaymentMode}
-            />
-          ) : (
-            <StyledField>
-              <Button type="submit" variant="primary">
-                Next
-                <StyledForwardIcon>
-                  <ForwardIcon />
-                </StyledForwardIcon>
-              </Button>
-            </StyledField>
-          )}
-        </Form.Element>
-      )}
-    </Form>
+  return (
+    <React.Fragment>
+      <Form
+        enableReinitialize
+        initialValues={{ ...initialValues[step], ...formsBag[step] }}
+        validations={validations[step]}
+        onSubmit={
+          step === StepsEnum.PAYMENT
+            ? handleSubmit({ formsBag, paymentMode, stripeElements, stripe })
+            : handleNextStep({ step, setStep, formsBag, setFormsBag })
+        }
+      >
+        {({ values: { currency, wantsToComment, wantsToCoverFees } }) => (
+          <Form.Element>
+            <Header step={step} onStepChange={setStep} />
+            {step === StepsEnum.AMOUNT && (
+              <AmountForm currency={currency} wantsToComment={wantsToComment} />
+            )}
+            {step === StepsEnum.DONOR && <DonorForm />}
+            {step === StepsEnum.PAYMENT && (
+              <PaymentForm
+                amount={formsBag[StepsEnum.AMOUNT].amount}
+                currency={formsBag[StepsEnum.AMOUNT].currency}
+                wantsToCoverFees={wantsToCoverFees}
+                paymentMode={paymentMode}
+                onPaymentModeChange={setPaymentMode}
+              />
+            )}
+          </Form.Element>
+        )}
+      </Form>
+      <StyledPoweredLink href="https://github.com/jwallet/donate" target="_blank">
+        Powered by DonorboxClone
+      </StyledPoweredLink>
+    </React.Fragment>
   );
 };
 

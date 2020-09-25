@@ -1,4 +1,4 @@
-import { mixin } from 'shared/utils/styles';
+import { color, font, mixin } from 'shared/utils/styles';
 import styled, { css } from 'styled-components';
 
 const arrowStyle = css`
@@ -53,4 +53,16 @@ export const BackIcon = styled.div`
 export const StyledForwardIcon = styled.span`
   margin-left: 1rem;
   position: relative;
+`;
+
+export const StyledPoweredLink = styled.a`
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  color: ${color.primary};
+  ${font.size(11)}
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;

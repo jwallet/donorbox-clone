@@ -7,11 +7,13 @@ import {
   getConvertedAmount,
   currencyRatesAmericanBasedStatic,
 } from 'shared/constants/currencies';
-import { FieldError, StyledForm } from 'shared/components/Form/styles';
+import { FieldError, StyledField, StyledForm } from 'shared/components/Form/styles';
 import getLatestRates from 'actions/currency';
 import { Form } from 'shared/components';
 import { GiftItemsEnum, GiftItems, GiftItemsBasePrice } from 'shared/constants/amounts';
 import Input from 'shared/components/Input';
+import Button from 'shared/components/Button';
+import { ForwardIcon, StyledForwardIcon } from 'app/styles';
 import { Amount, Description, Device, Donation, StyledDevice } from './styles';
 
 const giftItemsList = [GiftItemsEnum.COFFEE, GiftItemsEnum.BEER, GiftItemsEnum.BEERS];
@@ -121,6 +123,14 @@ const AmountForm = ({ currency, wantsToComment }) => {
       {wantsToComment && (
         <Form.Field.Textarea name="comment" label="Your comment" validate={Form.is.required()} />
       )}
+      <StyledField>
+        <Button type="submit" variant="primary">
+          Next
+          <StyledForwardIcon>
+            <ForwardIcon />
+          </StyledForwardIcon>
+        </Button>
+      </StyledField>
     </StyledForm>
   );
 };
