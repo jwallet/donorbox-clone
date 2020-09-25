@@ -56,7 +56,7 @@ const PaymentForm = ({ paymentMode, onPaymentModeChange, amount, currency }) => 
           <Form />
         ))}
         <StyledField>
-          <Button type="submit" variant="primary" style={{ width: '100%' }}>
+          <Button type="submit" variant="primary">
             {`Donate ${[currencySymbol, amount.toFixed(2)].join('')}`}
           </Button>
         </StyledField>

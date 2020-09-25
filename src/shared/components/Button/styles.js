@@ -3,6 +3,7 @@ import { mixin, font, color } from 'shared/utils/styles';
 
 export const StyledButton = styled.button`
   position: relative;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 3rem;
@@ -12,6 +13,7 @@ export const StyledButton = styled.button`
   border-radius: 3px;
   transition: all 0.1s;
   appearance: none;
+  width: 100%;
   ${mixin.clickable}
   ${font.size(18)}
   ${(props) => buttonVariants[props.variant]}
@@ -24,6 +26,7 @@ export const StyledButton = styled.button`
 const colored = css`
   color: #fff;
   background: ${(props) => color[props.variant]};
+  box-shadow: 0 2px 0 0 ${(props) => mixin.darken(color[props.variant], 0.4)};
   ${font.medium}
   &:not(:disabled) {
     &:hover {

@@ -13,10 +13,11 @@ import { usePaypalPaymentSucceeded } from 'shared/hooks/paypal';
 
 import { CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { PaymentModesEnum } from 'shared/constants/payments';
-import Header from './app/Header';
-import AmountForm from './app/AmountForm';
-import DonorForm from './app/DonorForm';
-import PaymentForm from './app/PaymentForm';
+import Header from './Header';
+import AmountForm from './AmountForm';
+import DonorForm from './DonorForm';
+import PaymentForm from './PaymentForm';
+import { ForwardIcon, StyledForwardIcon } from './styles';
 
 const initialValues = {
   [StepsEnum.AMOUNT]: {
@@ -147,8 +148,11 @@ const App = () => {
             />
           ) : (
             <StyledField>
-              <Button type="submit" variant="primary" style={{ width: '100%' }}>
+              <Button type="submit" variant="primary">
                 Next
+                <StyledForwardIcon>
+                  <ForwardIcon />
+                </StyledForwardIcon>
               </Button>
             </StyledField>
           )}

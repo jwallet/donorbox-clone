@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 
 import { STRIPE_API_KEY } from 'constant';
-import App from './App';
+import App from './app/App';
 import BaseStyles from './BaseStyles';
 import NormalizeStyles from './NormalizeStyles';
 

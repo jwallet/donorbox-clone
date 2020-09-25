@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Steps from 'shared/components/Steps';
 import { StepsEnum, StepsHeading } from 'shared/constants/steps';
-import { Heading, Title, Container, Back, Forward } from './styles';
+import { BackIcon, ForwardIcon } from 'app/styles';
+import { Heading, Title, Container, ArrowButton } from './styles';
 
 const stepsSize = Object.keys(StepsEnum).length;
 
@@ -14,12 +15,16 @@ const Header = ({ step, onStepChange: setStep }) => {
 
   return (
     <Container>
-      <Back type="button" onClick={decreaseStep} disabled={!canDecrease} />
+      <ArrowButton type="button" onClick={decreaseStep} disabled={!canDecrease}>
+        <BackIcon />
+      </ArrowButton>
       <Heading>
         <Title>{StepsHeading[step]}</Title>
         <Steps current={step - 1} size={stepsSize} />
       </Heading>
-      <Forward type="submit" disabled={!canIncrease} />
+      <ArrowButton type="submit" disabled={!canIncrease}>
+        <ForwardIcon />
+      </ArrowButton>
     </Container>
   );
 };
