@@ -37,12 +37,12 @@ const ELEMENT_OPTIONS = {
 };
 
 const creditCardsList = [
+  CreditCardsEnum.VISA,
+  CreditCardsEnum.MASTERCARD,
   CreditCardsEnum.AMEX,
-  CreditCardsEnum.DINERSCLUB,
   CreditCardsEnum.DISCOVER,
   CreditCardsEnum.JCB,
-  CreditCardsEnum.MASTERCARD,
-  CreditCardsEnum.VISA,
+  CreditCardsEnum.DINERSCLUB,
 ];
 
 const validateStripeElement = (stripeElements, Element, entity) => () => {
@@ -68,8 +68,8 @@ const StripeForm = () => {
       </Field>
       <CreditCards>
         <div>
-          {creditCardsList.map((cc, key) => (
-            <StyledCard key={key} active={ccBrand === cc}>
+          {creditCardsList.map((cc) => (
+            <StyledCard key={cc} active={ccBrand === cc}>
               {React.createElement(CreditCardSvgs[cc])}
             </StyledCard>
           ))}

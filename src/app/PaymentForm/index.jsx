@@ -41,7 +41,12 @@ const PaymentForm = ({ paymentMode, onPaymentModeChange, amount, currency }) => 
     <React.Fragment>
       <Container>
         {paymentModeList.map((p) => (
-          <SubMenu type="button" active={p === paymentMode} onClick={() => onPaymentModeChange(p)}>
+          <SubMenu
+            key={p}
+            type="button"
+            active={p === paymentMode}
+            onClick={() => onPaymentModeChange(p)}
+          >
             {renderSubMenuIcon(p)((Svg) => (
               <StyledSvg>
                 <Svg height={24} />
