@@ -3,7 +3,7 @@ import SlackNotifier from 'actions/slackNotifier';
 import Paypal from 'actions/paypal';
 import { PaymentModesEnum } from 'shared/constants/payments';
 
-export const usePaypalPaymentSucceeded = () => {
+export const usePaypalPaymentSucceeded = (showThanksNote = () => {}) => {
   React.useLayoutEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.has(Paypal.COOKIE_NAME)) {
@@ -12,6 +12,7 @@ export const usePaypalPaymentSucceeded = () => {
       const bag = Paypal.getCookieToData(cookieId);
       SlackNotifier.paymentSucceeded(PaymentModesEnum.PAYPAL, bag);
       Paypal.eraseCookie(cookieId);
+      showThanksNote();
     }
-  }, []);
+  }, [showThanksNote]);
 };

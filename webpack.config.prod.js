@@ -5,11 +5,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'production',
   entry: {
-    main: path.join(__dirname, 'src/index.jsx'),
+    index: path.join(__dirname, 'src/index.jsx'),
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name]-[hash].js',
+    filename: '[name].js',
     publicPath: '/',
   },
   module: {
@@ -38,7 +38,7 @@ module.exports = {
         use: [
           {
             loader: 'url-loader',
-            options: { name: '[name]-[hash].[ext]', limit: 10000 },
+            options: { name: '[name].[ext]', limit: 10000 },
           },
         ],
       },
@@ -60,7 +60,6 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
-      favicon: path.join(__dirname, 'src/favicon.png'),
     }),
     new webpack.DefinePlugin({
       'process.env': {

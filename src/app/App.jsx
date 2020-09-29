@@ -16,6 +16,7 @@ import AmountForm from './AmountForm';
 import DonorForm from './DonorForm';
 import PaymentForm from './PaymentForm';
 import { StyledPoweredLink } from './styles';
+import Thanks from './Thanks';
 
 const initialValues = {
   [StepsEnum.AMOUNT]: {
@@ -75,10 +76,15 @@ const handleNextStep = ({ setFormsBag, formsBag, step, setStep }) => async (valu
   }
 };
 
-const handleSubmit = ({ formsBag, paymentMode, stripeElements, stripe }) => async (
-  values,
-  actions,
-) => {
+const handleSubmit = ({
+  formsBag,
+  setFormsBag,
+  paymentMode,
+  setStep,
+  stripeElements,
+  stripe,
+  showThanksNote,
+}) => async (values, actions) => {
   const bag = Object.values(formsBag).reduce((acc, x) => ({ ...acc, ...x }), values);
   const giftItemLabel = get(
     AmountForm.giftOptionsUSD.find((d) => d.value === bag.giftItem),
@@ -103,15 +109,19 @@ const handleSubmit = ({ formsBag, paymentMode, stripeElements, stripe }) => asyn
         return;
       }
       SlackNotifier.paymentSucceeded(PaymentModesEnum.STRIPE, updatedBag);
-
+      showThanksNote();
       break;
     }
     default:
       break;
   }
+  setStep(StepsEnum.AMOUNT);
+  setFormsBag({});
+  actions.resetForm();
 };
 
 const App = () => {
+  const [donated, setDonated] = React.useState(false);
   const [step, setStep] = React.useState(StepsEnum.AMOUNT);
   const [paymentMode, setPaymentMode] = React.useState(PaymentForm.paymentModes[0]);
   const [formsBag, setFormsBag] = React.useState({});
@@ -119,8 +129,9 @@ const App = () => {
   const stripe = useStripe();
   const stripeElements = useElements();
 
-  usePaypalPaymentSucceeded();
+  const showThanksNote = () => setDonated(true);
 
+  usePaypalPaymentSucceeded(showThanksNote);
 
   return (
     <React.Fragment>
@@ -130,7 +141,15 @@ const App = () => {
         validations={validations[step]}
         onSubmit={
           step === StepsEnum.PAYMENT
-            ? handleSubmit({ formsBag, paymentMode, stripeElements, stripe })
+            ? handleSubmit({
+                formsBag,
+                setFormsBag,
+                paymentMode,
+                setStep,
+                stripeElements,
+                stripe,
+                showThanksNote,
+              })
             : handleNextStep({ step, setStep, formsBag, setFormsBag })
         }
       >
@@ -153,6 +172,7 @@ const App = () => {
           </Form.Element>
         )}
       </Form>
+      {donated && <Thanks onClose={() => setDonated(false)} />}
       <StyledPoweredLink href="https://github.com/jwallet/donate" target="_blank">
         Powered by DonorboxClone
       </StyledPoweredLink>

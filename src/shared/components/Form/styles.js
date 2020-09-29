@@ -9,7 +9,7 @@ export const StyledField = styled.div`
 
 export const StyledFieldInline = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 2%;
 `;
 
 export const StyledForm = styled.div`
