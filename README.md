@@ -1,7 +1,7 @@
 <h1 align="center">A simplified Donorbox* clone built with React hooks</h1>
 
 <p align="center">
-  This JS script, which injects a donation form, is a good alternative if you don't want to receive anymore monthly bills for processing fees.
+  This JS script, which injects a donation form, is a good alternative if you don't want to receive anymore monthly bills for unpayed processing fees.
 </p>
 
 <h3 align="center">
